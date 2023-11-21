@@ -13,6 +13,22 @@ describe('Testando sales - MODEL', function () {
     expect(allSales).to.have.lengthOf(3);
   });
 
+  it('Testando busca de vendas por id retorna vendas quando ela/elas existem', async function () {
+    sinon.stub(connection, 'execute').resolves([salesMock.salesByIdFromDB]);
+    const sale = await salesModel.getSaleById(1);
+
+    expect(sale).to.be.an('array');
+    expect(sale).to.have.lengthOf(2);
+  });
+
+  it('Testando busca de vendas por id não retorna vendas quando ela/elas não existem', async function () {
+    sinon.stub(connection, 'execute').resolves([[]]);
+    const sale = await salesModel.getSaleById(999);
+
+    expect(sale).to.be.an('array');
+    expect(sale).to.have.lengthOf(0);
+  });
+
   afterEach(function () {
     sinon.restore();
   });
