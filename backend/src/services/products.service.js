@@ -15,7 +15,16 @@ const getProductById = async (productId) => {
   return { status: 'SUCCESS', data: product };
 };
 
+const registerProd = async (productName) => {
+  const product = await productsModel.registerProd(productName);
+
+  if (!product) return { status: 'NOT_FOUND', data: 'Product not found' };
+
+  return { status: 'CREATED', data: product };
+};
+
 module.exports = {
   getAll,
   getProductById,
+  registerProd,
 };
