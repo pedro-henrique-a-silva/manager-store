@@ -30,6 +30,13 @@ describe('Testando products - MODEL', function () {
     expect(product).to.be.an('undefined');
   });
 
+  it('Testando cadastro de produtos', async function () {
+    sinon.stub(connection, 'execute').resolves([productsMock.createdProduct]);
+    const insertId = await productsModel.registerProd('novo produto');
+
+    expect(insertId).to.be.equal(5);
+  });
+
   afterEach(function () {
     sinon.restore();
   });
