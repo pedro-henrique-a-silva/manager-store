@@ -37,6 +37,17 @@ describe('Testando products - SERVICE', function () {
     expect(product.data).to.be.equal('Product not found');
   });
 
+  it('Testando Registro de produtos', async function () {
+    sinon.stub(productsModel, 'registerProd').resolves(5);
+
+    const product = await productsService.registerProd('Novo produto');
+
+    expect(product).to.have.property('status');
+    expect(product).to.have.property('data');
+    expect(product.status).to.be.equal('CREATED');
+    expect(product.data).to.be.equal(5);
+  });
+
   afterEach(function () {
     sinon.restore();
   });
