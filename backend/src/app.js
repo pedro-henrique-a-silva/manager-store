@@ -9,5 +9,6 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/products', routes.productsRouter);
+app.use('/sales', routes.salesRouter);
 
 module.exports = app;
