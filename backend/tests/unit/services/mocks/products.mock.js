@@ -18,7 +18,10 @@ const productFromDB = {
   name: 'Martelo de Thor',
 };
 
+const createdProduct = { status: 'CREATED', data: 5 };
+
 module.exports = {
   allProductsFromDB,
   productFromDB,
+  createdProduct,
 };
