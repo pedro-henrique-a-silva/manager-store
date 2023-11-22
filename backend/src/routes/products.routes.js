@@ -12,5 +12,10 @@ productsRouter.post(
 );
 
 productsRouter.get('/:id', productsController.getProductById);
+productsRouter.put(
+  '/:id', 
+  productsMiddlewares.validateProductName, 
+  productsController.updateProductById,
+);
 
 module.exports = productsRouter;
