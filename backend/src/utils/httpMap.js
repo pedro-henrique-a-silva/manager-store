@@ -1,5 +1,6 @@
 const httpMap = {
   SUCCESS: 200,
+  SUCCESS_NO_CONTENT: 204,
   CREATED: 201,
   INVALID_DATA: 400,
   NOT_FOUND: 404,
