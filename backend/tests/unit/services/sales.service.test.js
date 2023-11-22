@@ -38,6 +38,27 @@ describe('Testando sales - SERVICE', function () {
     expect(registerSaleData.data).to.be.deep.equal({ message: 'Product not found' });
   });
 
+  it('Testando busca de dados de vendas por id ', async function () {
+    sinon.stub(salesModel, 'getSaleById').resolves(salesMocks.saleByIdFromDB);
+
+    const registerSaleData = await salesService.getSaleById(salesMocks.salesToRegister);
+
+    expect(registerSaleData).to.have.property('status');
+    expect(registerSaleData).to.have.property('data');
+    expect(registerSaleData.status).to.be.equal('SUCCESS');
+    expect(registerSaleData.data).to.be.deep.equal(salesMocks.saleByIdFromDB);
+  });
+
+  it('Testando busca de dados de vendas por id dando erro ', async function () {
+    sinon.stub(salesModel, 'getSaleById').resolves([]);
+
+    const registerSaleData = await salesService.getSaleById(999);
+
+    expect(registerSaleData).to.have.property('status');
+    expect(registerSaleData).to.have.property('data');
+    expect(registerSaleData.status).to.be.equal('NOT_FOUND');
+  });
+
   afterEach(function () {
     sinon.restore();
   });
