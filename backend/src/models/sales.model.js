@@ -22,7 +22,27 @@ const getSaleById = async (saleId) => {
   return camelize(sale);
 };
 
+const registerSales = async (sales) => {
+  const [{ insertId }] = await connection.execute(`
+    INSERT INTO sales () VALUE ()
+  `);
+
+  const salesPromiseList = sales.map((sale) => (
+    connection.execute(`
+      INSERT INTO sales_products
+      (sale_id, product_id, quantity)
+      VALUES
+      (?, ?, ?)
+    `, [insertId, sale.productId, sale.quantity])
+  ));
+
+  await Promise.all(salesPromiseList);
+
+  return insertId;
+};
+
 module.exports = {
   getAll,
   getSaleById,
+  registerSales,
 };
