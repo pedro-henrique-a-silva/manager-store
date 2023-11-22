@@ -45,7 +45,7 @@ describe('Testando products - SERVICE', function () {
     expect(product).to.have.property('status');
     expect(product).to.have.property('data');
     expect(product.status).to.be.equal('CREATED');
-    expect(product.data).to.be.equal(5);
+    expect(product.data.id).to.be.equal(5);
   });
 
   afterEach(function () {
