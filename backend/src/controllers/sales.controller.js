@@ -8,17 +8,23 @@ const getAll = async (_req, res) => {
 
 const getSaleById = async (req, res) => {
   const { id } = req.params;
-  const products = await salesService.getSaleById(id);
+  const sale = await salesService.getSaleById(id);
 
-  if (products.status !== 'SUCCESS') {
+  if (sale.status !== 'SUCCESS') {
     return res
-      .status(httpMap[products.status]).json({ message: products.data }); 
+      .status(httpMap[sale.status]).json({ message: sale.data }); 
   }
   
-  return res.status(httpMap[products.status]).json(products.data);
+  return res.status(httpMap[sale.status]).json(sale.data);
+};
+
+const registerSales = async (req, res) => {
+  const insertedSales = await salesService.registerSales(req.body);
+  return res.status(httpMap[insertedSales.status]).json(insertedSales.data);
 };
 
 module.exports = {
   getAll,
   getSaleById,
+  registerSales,
 };
