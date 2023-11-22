@@ -32,9 +32,15 @@ const updatedProductbyId = async (productId, productName) => {
   return affectedRows;
 };
 
+const deletProductById = async (productId) => {
+  await connection.execute(`
+  DELETE FROM products WHERE id = ?`, [productId]);
+};
+
 module.exports = {
   getAll,
   getProductById,
   registerProd,
   updatedProductbyId,
+  deletProductById,
 };
