@@ -22,8 +22,19 @@ const registerProd = async (prodName) => {
   return insertId;
 };
 
+const updatedProductbyId = async (productId, productName) => {
+  const [{ affectedRows }] = await connection.execute(`
+    UPDATE products
+    SET name = ?
+    WHERE id = ?
+  `, [productName, productId]);
+
+  return affectedRows;
+};
+
 module.exports = {
   getAll,
   getProductById,
   registerProd,
+  updatedProductbyId,
 };
