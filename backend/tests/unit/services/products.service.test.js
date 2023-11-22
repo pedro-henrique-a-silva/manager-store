@@ -61,6 +61,28 @@ describe('Testando products - SERVICE', function () {
     expect(updatedProduct.data.name).to.be.equal('Novo martelo thor');
   });
 
+  it('Testando se é possivel deletar um produto com sucesso', async function () {
+    sinon.stub(productsModel, 'getProductById').resolves({ id: 1, name: 'martelo thor' });
+    sinon.stub(productsModel, 'deletProductById').resolves();
+
+    const updatedProduct = await productsService.deletProductById(1, 'Novo martelo thor');
+
+    expect(updatedProduct).to.have.property('status');
+    expect(updatedProduct.status).to.be.equal('SUCCESS_NO_CONTENT');
+  });
+
+  it('Testando se não é possivel deletar um produto que não exista', async function () {
+    sinon.stub(productsModel, 'getProductById').resolves(undefined);
+    sinon.stub(productsModel, 'deletProductById').resolves();
+
+    const updatedProduct = await productsService.deletProductById(999, 'Novo martelo thor');
+
+    expect(updatedProduct).to.have.property('status');
+    expect(updatedProduct.status).to.be.equal('NOT_FOUND');
+    expect(updatedProduct).to.have.property('data');
+    expect(updatedProduct.data).to.be.deep.equal({ message: 'Product not found' });
+  });
+
   afterEach(function () {
     sinon.restore();
   });
