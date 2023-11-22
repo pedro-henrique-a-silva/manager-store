@@ -1,4 +1,5 @@
 const { salesModel } = require('../models');
+const { productsModel } = require('../models');
 
 const getAll = async () => {
   const allSales = await salesModel.getAll();
@@ -14,11 +15,21 @@ const getSaleById = async (saleId) => {
 };
 
 const registerSales = async (sales) => {
-  const insertId = await salesModel.registerSales(sales);
+  const salesPromise = sales.map((sale) => productsModel.getProductById(sale.productId));
+  const salesResultado = await Promise.all(salesPromise);
 
+  const salesFiltered = sales.filter((_sale, index) => salesResultado[index]);
+
+  if (salesFiltered.length !== sales.length) {
+    return { 
+      status: 'NOT_FOUND', 
+      data: { message: 'Product not found' } }; 
+  }
+
+  const insertId = await salesModel.registerSales(salesFiltered);
   const returnMessage = {
     id: insertId,
-    itemsSold: sales,
+    itemsSold: salesFiltered,
   };
 
   return { status: 'CREATED', data: returnMessage };
