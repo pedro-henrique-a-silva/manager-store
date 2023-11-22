@@ -19,9 +19,11 @@ const productFromDB = {
 };
 
 const createdProduct = { insertId: 5 };
+const updatedProduct = { affectedRows: 1 };
 
 module.exports = {
   allProductsFromDB,
   productFromDB,
   createdProduct,
+  updatedProduct,
 };
