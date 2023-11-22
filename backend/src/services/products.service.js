@@ -29,8 +29,26 @@ const registerProd = async (productName) => {
   return { status: 'CREATED', data: { id: product, name: productName } };
 };
 
+const updatedProductbyId = async (productId, productName) => {
+  if (productName.length < 5) {
+    return { 
+      status: 'UNABLE_TO_PROCESS', 
+      data: { message: '"name" length must be at least 5 characters long' }, 
+    };
+  }
+
+  const product = await productsModel.getProductById(productId);
+
+  if (!product) return { status: 'NOT_FOUND', data: { message: 'Product not found' } }; 
+  
+  await productsModel.updatedProductbyId(productId, productName);
+
+  return { status: 'SUCCESS', data: { id: Number(productId), name: productName } };
+};
+
 module.exports = {
   getAll,
   getProductById,
   registerProd,
+  updatedProductbyId,
 };
