@@ -26,7 +26,21 @@ const salesToRegister = [
   },
 ];
 
+const saleByIdFromDB = [
+  {
+    productId: 1,
+    date: '2023-11-22T21:59:09.000Z',
+    quantity: 5,
+  },
+  {
+    productId: 2,
+    date: '2023-11-22T21:59:09.000Z',
+    quantity: 10,
+  },
+];
+
 module.exports = {
   salesRegisterFromService,
   salesToRegister,
+  saleByIdFromDB,
 };
