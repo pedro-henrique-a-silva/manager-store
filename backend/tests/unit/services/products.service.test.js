@@ -48,6 +48,19 @@ describe('Testando products - SERVICE', function () {
     expect(product.data.id).to.be.equal(5);
   });
 
+  it('Testando atualização de produtos', async function () {
+    sinon.stub(productsModel, 'updatedProductbyId').resolves(1);
+    sinon.stub(productsModel, 'getProductById').resolves({ id: 1, name: 'martelo thor' });
+
+    const updatedProduct = await productsService.updatedProductbyId(1, 'Novo martelo thor');
+
+    expect(updatedProduct).to.have.property('status');
+    expect(updatedProduct).to.have.property('data');
+    expect(updatedProduct.status).to.be.equal('SUCCESS');
+    expect(updatedProduct.data.id).to.be.equal(1);
+    expect(updatedProduct.data.name).to.be.equal('Novo martelo thor');
+  });
+
   afterEach(function () {
     sinon.restore();
   });
