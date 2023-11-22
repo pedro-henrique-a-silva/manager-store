@@ -44,6 +44,13 @@ describe('Testando products - MODEL', function () {
     expect(affectedRows).to.be.equal(1);
   });
 
+  it('Testando exclusão de produtos com sucesso', async function () {
+    const deleteFunc = sinon.stub(connection, 'execute').resolves();
+    await productsModel.deletProductById(1);
+
+    expect(deleteFunc).to.have.been.calledWith();
+  });
+
   afterEach(function () {
     sinon.restore();
   });
