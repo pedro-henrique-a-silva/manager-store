@@ -21,12 +21,12 @@ describe('Testando sales - MODEL', function () {
     expect(sale).to.have.lengthOf(2);
   });
 
-  it('Testando busca de vendas por id não retorna vendas quando ela/elas não existem', async function () {
-    sinon.stub(connection, 'execute').resolves([[]]);
-    const sale = await salesModel.getSaleById(999);
+  it('Testando registro de vendas', async function () {
+    sinon.stub(connection, 'execute').onFirstCall().resolves([{ insertId: 5 }]);
+    const insertedIdSale = await salesModel.registerSales(salesMock.salesToRegister);
 
-    expect(sale).to.be.an('array');
-    expect(sale).to.have.lengthOf(0);
+    expect(insertedIdSale).to.be.an('number');
+    expect(insertedIdSale).to.be.equal(5);
   });
 
   afterEach(function () {
