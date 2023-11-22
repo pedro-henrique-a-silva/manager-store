@@ -37,6 +37,13 @@ describe('Testando products - MODEL', function () {
     expect(insertId).to.be.equal(5);
   });
 
+  it('Testando atualização de produtos', async function () {
+    sinon.stub(connection, 'execute').resolves([productsMock.updatedProduct]);
+    const affectedRows = await productsModel.updatedProductbyId(1, 'novo produto');
+
+    expect(affectedRows).to.be.equal(1);
+  });
+
   afterEach(function () {
     sinon.restore();
   });
