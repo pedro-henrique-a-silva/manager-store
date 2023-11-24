@@ -20,4 +20,6 @@ describe('Teste Integração Rotas de produtos', function () {
     expect(response).to.have.status(200);
     expect(response.body).to.be.an('array');
   });
+
+  afterEach(sinon.restore);
 });
