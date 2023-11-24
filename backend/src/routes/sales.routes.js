@@ -10,6 +10,8 @@ salesRouter.post(
   salesMiddlewares.validateProductToRegister,
   salesController.registerSales,
 );
+
 salesRouter.get('/:id', salesController.getSaleById);
+salesRouter.delete('/:id', salesController.deleteSaleById);
 
 module.exports = salesRouter;
