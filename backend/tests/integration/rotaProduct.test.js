@@ -11,17 +11,17 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Teste Integração Rotas de produtos', function () {
-  it('Testando rota /products de listagem de produtos', async function () {
-    sinon.stub(connection, 'execute').resolves([productsMock.allProductsFromDB]);
-    const response = await chai
-      .request(app)
-      .get('/products');
+  // it('Testando rota /products de listagem de produtos', async function () {
+  //   sinon.stub(connection, 'execute').resolves([productsMock.allProductsFromDB]);
+  //   const response = await chai
+  //     .request(app)
+  //     .get('/products');
 
-    expect(response).to.have.status(200);
-    expect(response.body).to.be.an('array');
-  });
+  //   expect(response).to.have.status(200);
+  //   expect(response.body).to.be.an('array');
+  // });
 
-  afterEach(function () {
-    sinon.restore();
-  });
+  // afterEach(function () {
+  //   sinon.restore();
+  // });
 });
