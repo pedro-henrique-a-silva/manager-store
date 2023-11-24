@@ -21,5 +21,7 @@ describe('Teste Integração Rotas de produtos', function () {
     expect(response.body).to.be.an('array');
   });
 
-  afterEach(sinon.restore);
+  afterEach(function () {
+    sinon.restore();
+  });
 });

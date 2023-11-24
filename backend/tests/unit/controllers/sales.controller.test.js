@@ -110,5 +110,7 @@ describe('Testando Sales - CONTROLLER', function () {
     expect(deleteSaleByIdStub).to.have.been.calledWith(999);
   });
 
-  afterEach(sinon.restore);
+  afterEach(function () {
+    sinon.restore();
+  });
 });
