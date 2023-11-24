@@ -23,8 +23,16 @@ const registerSales = async (req, res) => {
   return res.status(httpMap[insertedSales.status]).json(insertedSales.data);
 };
 
+const deleteSaleById = async (req, res) => {
+  const { id } = req.params;
+  const response = await salesService.deleteSaleById(id);
+  
+  return res.status(httpMap[response.status]).json(response.data);
+};
+
 module.exports = {
   getAll,
   getSaleById,
   registerSales,
+  deleteSaleById,
 };
