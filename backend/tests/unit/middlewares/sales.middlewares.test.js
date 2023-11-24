@@ -8,12 +8,6 @@ const { expect } = chai;
 
 chai.use(sinonChai);
 
-// const next = sinon.stub().returns(); // crie um stub
-// >
-// myMiddlewares.validateMiddleware(req, res, next); // passe o `next` para o middleware junto com o `req` e `res`
-// >
-// expect(next).to.have.been.calledWith(); 
-
 describe('Testando sales - Middleware', function () {
   it('Testando se não e possivel cadastrar venda com sucesso', async function () {
     const req = {
