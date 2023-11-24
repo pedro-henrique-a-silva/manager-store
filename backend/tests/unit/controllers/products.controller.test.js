@@ -4,21 +4,31 @@ const sinonChai = require('sinon-chai');
 
 const { expect } = chai;
 
-const {
-  registerProductFromServiceSuccess,
-  registerProductNameLengthSmallerThanFive,
-  productDeletedWithSuccess,
-  productDeletedError,
-  productByIdFromService,
-} = require('./mocks/products.mock');
+const productsMock = require('./mocks/products.mock');
 const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
 
 chai.use(sinonChai);
 
 describe('Testando products - CONTROLLER', function () {
+  it('Testando listagem de todas as vendas', async function () {
+    sinon.stub(productsService, 'getAll')
+      .resolves({ status: 'SUCCESS', data: productsMock.allProductsFromService });
+
+    const req = {};
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsController.getAll(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(productsMock.allProductsFromService);
+  });
+
   it('Testando registro de produtos com sucesso', async function () {
-    sinon.stub(productsService, 'registerProd').resolves(registerProductFromServiceSuccess);
+    sinon.stub(productsService, 'registerProd').resolves(productsMock.registerProductFromServiceSuccess);
     const req = {
       body: { name: 'Produto legal' },
     };
@@ -30,11 +40,11 @@ describe('Testando products - CONTROLLER', function () {
 
     await productsController.registerProd(req, res);
     expect(res.status).to.have.been.calledWith(201);
-    expect(res.json).to.have.been.calledWith(registerProductFromServiceSuccess.data);
+    expect(res.json).to.have.been.calledWith(productsMock.registerProductFromServiceSuccess.data);
   });
 
   it('Testando busca de produtos por Id', async function () {
-    sinon.stub(productsService, 'getProductById').resolves(productByIdFromService);
+    sinon.stub(productsService, 'getProductById').resolves(productsMock.productByIdFromService);
     const req = {
       params: { id: 1 },
     };
@@ -66,7 +76,7 @@ describe('Testando products - CONTROLLER', function () {
   });
 
   it('Testando registro de produtos falhando  com com nome com menos de 5 caracteres', async function () {
-    sinon.stub(productsService, 'registerProd').resolves(registerProductNameLengthSmallerThanFive);
+    sinon.stub(productsService, 'registerProd').resolves(productsMock.registerProductNameLengthSmallerThanFive);
     const req = {
       body: { name: 'Pro' },
     };
@@ -77,7 +87,7 @@ describe('Testando products - CONTROLLER', function () {
     };
 
     const returnMessage = {
-      message: registerProductNameLengthSmallerThanFive.data,
+      message: productsMock.registerProductNameLengthSmallerThanFive.data,
     };
 
     await productsController.registerProd(req, res);
@@ -86,7 +96,7 @@ describe('Testando products - CONTROLLER', function () {
   });
 
   it('Testando se é posssivel deletar um produto com sucesso', async function () {
-    sinon.stub(productsService, 'deletProductById').resolves(productDeletedWithSuccess);
+    sinon.stub(productsService, 'deletProductById').resolves(productsMock.productDeletedWithSuccess);
     const req = {
       params: { id: '1' },
     };
@@ -102,7 +112,7 @@ describe('Testando products - CONTROLLER', function () {
   });
 
   it('Testando se não é posssivel deletar um produto que não exista', async function () {
-    sinon.stub(productsService, 'deletProductById').resolves(productDeletedError);
+    sinon.stub(productsService, 'deletProductById').resolves(productsMock.productDeletedError);
     const req = {
       params: { id: '1' },
     };
