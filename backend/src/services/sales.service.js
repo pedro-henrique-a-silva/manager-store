@@ -35,8 +35,21 @@ const registerSales = async (sales) => {
   return { status: 'CREATED', data: returnMessage };
 };
 
+const deleteSaleById = async (saleId) => {
+  const sale = await salesModel.getSaleById(saleId);
+
+  if (!sale || sale.length === 0) {
+    return { status: 'NOT_FOUND', data: { message: 'Sale not found' } }; 
+  }
+
+  await salesModel.deleteSaleById(saleId);
+
+  return { status: 'SUCCESS_NO_CONTENT', data: '' };
+};
+
 module.exports = {
   getAll,
   getSaleById,
   registerSales,
+  deleteSaleById,
 };
