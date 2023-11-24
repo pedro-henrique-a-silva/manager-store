@@ -8,11 +8,12 @@ const getAll = async (_req, res) => {
 
 const getSaleById = async (req, res) => {
   const { id } = req.params;
+
   const sale = await salesService.getSaleById(id);
 
   if (sale.status !== 'SUCCESS') {
     return res
-      .status(httpMap[sale.status]).json({ message: sale.data }); 
+      .status(httpMap[sale.status]).json(sale.data); 
   }
   
   return res.status(httpMap[sale.status]).json(sale.data);
