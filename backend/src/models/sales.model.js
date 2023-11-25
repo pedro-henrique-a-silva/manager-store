@@ -6,6 +6,7 @@ const getAll = async () => {
     SELECT sale_id, product_id, date, quantity FROM sales_products sp
     INNER JOIN products p ON p.id = sp.product_id
     INNER join sales s ON s.id = sp.sale_id
+    ORDER BY sale_id, product_id
   `);
 
   return camelize(allSales);
